@@ -18,7 +18,7 @@ export const mapTicketIntegraPormel = (ticketInt: IncIssueGetResponse): IssuesIn
       project: { key: "SPT" },
       issuetype: { id: issueId.Incidente },
       summary: `ID:${ticketInt.id}-${ticketInt.fields.summary}`,
-      description: description,
+      description: description || createDefaultDescription(),
       customfield_10043: urgencia ? { id: urgencia } : undefined,
       customfield_10004: impacto ? { id: impacto } : undefined,
       priority: prioridad ? { id: prioridad } : undefined,
@@ -57,6 +57,10 @@ function cleanADFNode(node: any): any {
     const content = (Array.isArray(node.content) ? node.content : [])
       .map(cleanADFNode)
       .filter((n: any) => n !== null);
+    // Return null if paragraph has no content to avoid empty paragraphs
+    if (content.length === 0) {
+      return null;
+    }
     return { type: 'paragraph', content };
   }
 
@@ -78,9 +82,11 @@ function cleanADFNode(node: any): any {
       const content = node.content
         .map(cleanADFNode)
         .filter((n: any) => n !== null);
-      if (content.length > 0) {
-        result.content = content;
+      // Return null if block has no content to avoid empty blocks
+      if (content.length === 0) {
+        return null;
       }
+      result.content = content;
     }
     return result;
   }
@@ -98,7 +104,7 @@ function cleanADFNode(node: any): any {
   return null;
 }
 
-export function toADF(value: any): ADFDoc {
+export function toADF(value: any): ADFDoc | null {
   // si ya es ADF válido con estructura
   if (value && value.type === "doc" && value.version === 1 && Array.isArray(value.content)) {
     // Clean the ADF content to remove invalid structures
@@ -106,20 +112,25 @@ export function toADF(value: any): ADFDoc {
       .map(cleanADFNode)
       .filter((n: any) => n !== null);
 
+    // If content is empty after cleaning, return null so default description is used
+    if (cleanedContent.length === 0) {
+      return null;
+    }
+
     return {
       type: "doc",
       version: 1,
-      content: cleanedContent.length > 0 ? cleanedContent : [
-        {
-          type: "paragraph",
-          content: [],
-        },
-      ],
+      content: cleanedContent,
     };
   }
 
   // si viene como string o cualquier cosa -> ADF mínimo
   const text = (value ?? "").toString().trim();
+
+  // If text is empty, return null so default description is used
+  if (!text) {
+    return null;
+  }
 
   return {
     type: "doc",
@@ -127,7 +138,23 @@ export function toADF(value: any): ADFDoc {
     content: [
       {
         type: "paragraph",
-        content: text.length ? [{ type: "text", text }] : [],
+        content: [{ type: "text", text }],
+      },
+    ],
+  };
+}
+
+/**
+ * Creates a default description ADF document when no description is available
+ */
+function createDefaultDescription(): ADFDoc {
+  return {
+    type: "doc",
+    version: 1,
+    content: [
+      {
+        type: "paragraph",
+        content: [{ type: "text", text: "Ticket migrado desde Integratel" }],
       },
     ],
   };
