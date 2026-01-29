@@ -1,0 +1,15 @@
+
+> manager-ms@0.0.1 start
+> nest start
+
+[32m[Nest] 9732  - [39m28/01/2026, 7:46:05 p. m. [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 9732  - [39m28/01/2026, 7:46:05 p. m. [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected[39m
+[32m[Nest] 9732  - [39m28/01/2026, 7:46:05 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 9732  - [39m28/01/2026, 7:46:05 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mNatsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 9732  - [39m28/01/2026, 7:46:05 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mClientsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 9732  - [39m28/01/2026, 7:46:05 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mManagerModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 9732  - [39m28/01/2026, 7:46:06 p. m. [32m    LOG[39m [38;5;3m[NestMicroservice] [39m[32mNest microservice successfully started[39m[38;5;3m +439ms[39m
+[32m[Nest] 9732  - [39m28/01/2026, 7:46:06 p. m. [32m    LOG[39m [38;5;3m[Manager-ms] [39m[32mManagment Microservice running on port:3001[39m
+[32m[Nest] 9732  - [39m28/01/2026, 7:46:06 p. m. [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mManagerController {/}:[39m[38;5;3m +2ms[39m
+[32m[Nest] 9732  - [39m28/01/2026, 7:46:06 p. m. [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +2ms[39m
+�Desea terminar el trabajo por lotes (S/N)? �Desea terminar el trabajo por lotes (S/N)? 
