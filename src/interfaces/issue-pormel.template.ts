@@ -23,8 +23,14 @@ export enum ImpactoId {
     Moderado = "10002",
     Menor = "10003",
 }
-
-
+export enum servicesId {
+    Campañas = "ari:cloud:graph::service/f74cb678-7b46-4ef5-ab62-7611ab6444eb/817145be-fd23-11f0-b9f6-0affcf0fbd09",
+    BI = "ari:cloud:graph::service/f74cb678-7b46-4ef5-ab62-7611ab6444eb/ce7b58cc-fd23-11f0-8c4e-0affcf0fbd09"
+}
+export enum teamsId {
+    NOC = "040c35a7-ab29-4cf5-9102-4ed7a1d5b14c",
+    Especialisado ="56b66b31-28fc-4d96-899f-b2439f4f0b02"
+}
 export interface IssuesInterface {
     fields:{
         project:{
@@ -44,13 +50,12 @@ export interface IssuesInterface {
         
         priority?: { id:priorityId}| null;
         environment?: string | null;
-        //TODO: investigar que es un affected services
-        customfield_10044?: { id:string }[]| null;
-        
-        //TODO: investigar que es Organizations
-        customfield_10002?: { id:string }[]| null;
 
-        customfield_10001?: { id: string }| null; 
+        customfield_10044: { id:servicesId }[]| null;
+        
+        customfield_10002: { id:string }[]| null;
+        //Team
+        customfield_10001?: { id: teamsId }| null; 
         //Major Incident
         customfield_10047?: string| null;
         //root cause

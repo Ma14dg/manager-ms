@@ -1,4 +1,4 @@
-import { ImpactoId, priorityId, UrgenciasId } from "src/interfaces/issue-pormel.template";
+import { ImpactoId, priorityId, servicesId, teamsId, UrgenciasId } from "src/interfaces/issue-pormel.template";
 
 export const mapUrgencia = (id?: string): UrgenciasId | undefined => {
   switch (id) {
@@ -28,3 +28,15 @@ export const mapPrioridad = (id?: string): priorityId | undefined => {
     default: return undefined;
   }
 };
+
+export const mapServices = (services: string): servicesId => {
+  if(services === "INDRA - Operaciones - BI") return servicesId.BI;
+  if(services === "SOAINT") return servicesId.Campañas;
+  throw new Error(`Servicio no reconocido: ${services}`);
+}
+
+export const mapTeam = (status: string): teamsId => {
+  if(status === "Asignado N1") return teamsId.NOC;
+  if(status === "Asignado N2") return teamsId.Especialisado;
+  throw new Error(`Status no reconocido para asignar equipo: ${status}`);
+}

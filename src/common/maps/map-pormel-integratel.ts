@@ -1,26 +1,29 @@
 import {
   issueId,
-  IssuesInterface,
-  UrgenciasId,
-  ImpactoId,
-  priorityId
+  IssuesInterface
 } from "../../interfaces/issue-pormel.template";
 import { IncIssueGetResponse } from '../../interfaces/issue-integratel.template';
-import { mapImpacto, mapPrioridad, mapUrgencia } from "./helpers/map.helpers";
+import { mapImpacto, mapPrioridad, mapServices, mapTeam, mapUrgencia } from "./helpers/map.helpers";
+import { map } from "rxjs";
 
 export const mapTicketIntegraPormel = (ticketInt: IncIssueGetResponse): IssuesInterface => {
   const urgencia = mapUrgencia(ticketInt.fields.customfield_13269?.id);
   const impacto = mapImpacto(ticketInt.fields.customfield_10246?.id);
   const prioridad = mapPrioridad(ticketInt.fields.priority?.id);
   const description = toADF(ticketInt.fields.description);
+  const services = mapServices(ticketInt.fields.customfield_16907);
+  const team = mapTeam(ticketInt.fields.status!.name);
   const ticketPormel: IssuesInterface = {
     fields: {
       project: { key: "SPT" },
       issuetype: { id: issueId.Incidente },
-      summary: `ID:${ticketInt.id}-${ticketInt.fields.summary}`,
+      summary: `|Key:${ticketInt.key}| - | ${ticketInt.fields.summary} |`,
       description: description || createDefaultDescription(),
       customfield_10043: urgencia ? { id: urgencia } : undefined,
       customfield_10004: impacto ? { id: impacto } : undefined,
+      customfield_10002:[{ id: '100'}],
+      customfield_10044: [{ id: services }],
+      customfield_10001:{id: team},
       priority: prioridad ? { id: prioridad } : undefined,
       environment: ticketInt.fields.environment ?? undefined
     }

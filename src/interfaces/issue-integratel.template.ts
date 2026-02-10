@@ -1,3 +1,5 @@
+import e from "express";
+
 export type JiraId = string;
 
 export interface JiraLinkRef {
@@ -74,6 +76,12 @@ export interface JiraAttachment {
   author?: JiraUser;
 }
 
+export interface JiraStatus {
+  id: JiraId;
+  name: string;
+  self?: string;
+}
+
 // =======================
 // Response interface
 // =======================
@@ -108,6 +116,9 @@ export interface IncIssueGetResponse {
       };
     } | null;
 
+    //Asignacion y Estado
+      status?: JiraStatus;
+
     // Soportados en tu payload (aunque algunos sean optional)
     reporter?: JiraUser | null;
     assignee?: JiraUser | null;
@@ -124,7 +135,7 @@ export interface IncIssueGetResponse {
     customfield_13283?: CmdbObjectInIssue[] | null; // Tipología
     customfield_13274?: CmdbObjectInIssue[] | null; // APLICACION 1
     customfield_14687?: CmdbObjectInIssue[] | null; // Tipo de Componente
-
+    customfield_16907: string;
     
     attachment?: JiraAttachment[];
   };
